@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin-styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 sidebar">
+                <div class="text-center mb-4">
+                    <img src="https://via.placeholder.com/50" alt="Logo" class="rounded-circle mb-3">
+                    <h4 class="text-white">Soronara</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/admin-panel">
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/adminproductsPage">
+                            <i class="fas fa-box me-2"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/adminOrdersPage">
+                            <i class="fas fa-shopping-cart me-2"></i> Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/adminCustomersPage">
+                            <i class="fas fa-users me-2"></i> Customers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/adminAnalyticsPage">
+                            <i class="fas fa-chart-bar me-2"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active" href="/adminSettingsPage">
+                            <i class="fas fa-cog me-2"></i> Settings
+                        </a>
+                    </li>
+                    <!-- Replace the existing logout nav-item with this -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- Logout Modal -->
+            <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center pb-4">
+                            <i class="fas fa-sign-out-alt fa-4x mb-3" style="color: #4e73df;"></i>
+                            <h4 class="modal-title mb-3" id="logoutModalLabel">Ready to Leave?</h4>
+                            <p class="text-muted">Select "Logout" below if you are ready to end your current session.</p>
+                            <div class="mt-4">
+                                <button type="button" class="btn btn-secondary me-2 px-4" data-bs-dismiss="modal">Cancel</button>
+                                <a href="/" class="btn btn-primary px-4">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-10 main-content">
+                <!-- Header Section -->
+                <div class="profile-section d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex align-items-center">
+                        <img src="<%= user.profile_picture %>" class="img-fluid rounded-circle" alt="Profile Picture" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                        <h5 class="mb-0">Settings</h5>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Save Changes
+                    </button>
+                </div>
+
+                <!-- Settings Navigation -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <ul class="nav nav-pills mb-3" id="settings-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#general">
+                                    <i class="fas fa-cog me-2"></i>General
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#profile">
+                                    <i class="fas fa-user me-2"></i>Profile
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#security">
+                                    <i class="fas fa-shield-alt me-2"></i>Security
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notifications">
+                                    <i class="fas fa-bell me-2"></i>Notifications
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#billing">
+                                    <i class="fas fa-credit-card me-2"></i>Billing
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="settings-tabContent">
+                            <!-- General Settings -->
+                            <div class="tab-pane fade show active" id="general">
+                                <h6 class="mb-4">General Settings</h6>
+                                <form>
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Store Name</label>
+                                                <input type="text" class="form-control" value="My Store">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Store Email</label>
+                                                <input type="email" class="form-control" value="store@example.com">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Store Currency</label>
+                                                <select class="form-select">
+                                                    <option value="USD">USD ($)</option>
+                                                    <option value="EUR">EUR (€)</option>
+                                                    <option value="GBP">GBP (£)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Time Zone</label>
+                                                <select class="form-select">
+                                                    <option>UTC-5 (Eastern Time)</option>
+                                                    <option>UTC-4 (Atlantic Time)</option>
+                                                    <option>UTC+0 (London)</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Store Logo</label>
+                                                <input type="file" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Store Address</label>
+                                                <textarea class="form-control" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Profile Settings -->
+                            <div class="tab-pane fade" id="profile">
+                                <h6 class="mb-4">Profile Settings</h6>
+                                <div class="row">
+                                    <!-- <div class="col-md-4 text-center mb-4">
+                                        <img src="https://via.placeholder.com/150" class="rounded-circle mb-3">
+                                        <button class="btn btn-outline-primary btn-sm">Change Photo</button>
+                                    </div> -->
+
+                                    <div class="col-md-4 text-center mb-4">
+                                        <div id="alert-container" style="font-size: 13px;"></div>
+                                        <form id="profilePhotoForm" enctype="multipart/form-data">
+                                            <img src="<%= user.profile_picture || 'https://via.placeholder.com/150' %>" class="rounded-circle mb-3" id="profilePreview" width="150" height="150">
+                                            <div class="mb-3">
+                                                <input type="file" class="form-control" id="profilePhoto" name="profile_picture" accept="image/*" hidden>
+                                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="document.getElementById('profilePhoto').click()">
+                                                    Change Photo
+                                                </button>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-sm" style="display: none;" id="savePhotoBtn">
+                                                Save Photo
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="col-md-8">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" placeholder="First Name">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" placeholder="Last Name">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Bio</label>
+                                                <textarea class="form-control" rows="4" placeholder="Enter Bio"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Contact Number</label>
+                                                <input type="tel" class="form-control" placeholder="Contact Number">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Security Settings -->
+                            <div class="tab-pane fade" id="security">
+                                <h6 class="mb-4">Security Settings</h6>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6>Change Password</h6>
+                                        <form>
+                                            <div class="mb-3">
+                                                <label class="form-label">Current Password</label>
+                                                <input type="password" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">New Password</label>
+                                                <input type="password" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Confirm New Password</label>
+                                                <input type="password" class="form-control">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Two-Factor Authentication</h6>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                            <label class="form-check-label" for="twoFactorAuth">Enable 2FA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notification Settings -->
+                            <div class="tab-pane fade" id="notifications">
+                                <h6 class="mb-4">Notification Preferences</h6>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Order Notifications</h6>
+                                                <p class="text-muted mb-0">Receive notifications for new orders</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Customer Messages</h6>
+                                                <p class="text-muted mb-0">Get notified for customer inquiries</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" checked>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="mb-3 d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Product Updates</h6>
+                                                <p class="text-muted mb-0">Notifications for low stock and updates</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Billing Settings -->
+                            <div class="tab-pane fade" id="billing">
+                                <h6 class="mb-4">Billing Information</h6>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h6>Payment Methods</h6>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="fab fa-cc-visa fa-2x me-3"></i>
+                                            <div>
+                                                <h6 class="mb-0">Visa ending in 4242</h6>
+                                                <small class="text-muted">Expires 12/24</small>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-danger ms-auto">Remove</button>
+                                        </div>
+                                        <button class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-plus me-2"></i>Add Payment Method
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Billing History</h6>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Amount</th>
+                                                        <th>Status</th>
+                                                        <th>Invoice</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Aug 1, 2023</td>
+                                                        <td>$29.99</td>
+                                                        <td><span class="badge bg-success">Paid</span></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary">
+                                                                <i class="fas fa-download"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Form submission handling
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault()
+                // Add your form submission logic here
+            })
+        })
+
+        // Image preview for profile photo
+        const profilePhotoInput = document.querySelector('input[type="file"]')
+        if (profilePhotoInput) {
+            profilePhotoInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader()
+                    reader.onload = function(e) {
+                        document.querySelector('.rounded-circle').src = e.target.result
+                    }
+                    reader.readAsDataURL(e.target.files[0])
+                }
+            })
+        }
+
+
+
+        document.getElementById('profilePhoto').addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview').src = e.target.result;
+                document.getElementById('savePhotoBtn').style.display = 'inline-block';
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+    
+    </script>
+    <script src="/Adminjs/settings/settings.js"></script>
+</body>
+</html>
+

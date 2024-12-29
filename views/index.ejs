@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+</head>
+<style>
+    
+    .product-card{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+        height: 400px;
+        padding-inline: 1.1rem;
+        transition: all .5s ease;
+        &:hover{
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+            transform: scale(1.05);
+        }
+    
+    }
+    .product-image{
+        width: 200px;
+        height: 180px;
+        margin:10px auto;
+        margin-bottom: 20px;
+    }
+    .product-card:hover img{
+        transform: scale(1.1);
+        
+    }
+    .product-card img{
+        width: 100%;
+        object-fit: contain;
+        transition: all .5s ease;
+    }
+    .product-card p{
+        margin: 0;
+        font-size: 13px;
+    }
+    .product-card .product-name{
+        font-size: 16px;
+        text-transform: capitalize;
+    }
+    .btn-primary{
+        position: absolute;
+        bottom: 20px;
+        display: block;
+        right: 30%;
+        background-color:white !important;
+        outline: none !important;
+        color: black !important;
+        font-family: 'Montserrat', sans-serif !important;
+        border: thin solid orange !important;
+    }
+    .product-card .discounted-price-percent{
+        position: absolute;
+        right: 0;
+        top: 10px;
+        background-color: orange;
+        color: green !important;
+    }
+    .product-card strong{
+        color: black !important;
+    }
+   .product-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 10px;
+    padding-block: 4rem;
+    padding-inline: 2rem;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 13px !important;
+   }
+
+.swiper-container {
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    margin: 10px auto;
+    overflow: hidden;
+    margin-top: 50px !important;
+}
+
+.swiper-slide  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.swiper-button-prev,.swiper-button-next{
+    color: orange;
+}
+
+
+@media screen and (max-width:1024px) {
+    .swiper-container {
+        height: 26vh;
+    }
+    
+}
+h5{
+    font-size: 10px;
+}
+.write-up{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    place-content: center;
+    /* border: 3px solid red; */
+    .new-collectons{
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 20px;
+        color: white !important;
+        margin-bottom: 0;
+    }
+    .normalText{
+        color: white !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+    h2,h3{
+        font-family: 'Montserrat', sans-serif !important;
+        color: orange !important;
+        font-weight: 500;
+    }
+
+    .square{
+        border:  double;
+        width: 200PX;
+        height: 200PX;
+        position: relative;
+        z-index: 50;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: rotate(45deg);
+        margin: auto;
+       
+    }
+    .innerdiv{
+            position: relative;
+            top: 0;
+            transform: rotate(0) !important;
+        }
+
+}
+</style>
+<body>
+    <%- include('partials/header.ejs') %>
+
+    <div class="container text-center my-5">
+        <h1 class="display-secial" style="font-family: 'Montserrat', sans-serif;">Special Offers</h1>
+        <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-icon"></span>
+            <span class="divider-line"></span>
+        </div>
+        <nav class="mt-4">
+            <ul class="nav justify-content-center flex-wrap">
+                <li class="nav-item"><a class="nav-link" href="#">Staples</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Snacks</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Fruits & Vegetables</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Breakfast & Cereal</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="container mb-5 p-3" style="margin-bottom: 30px;">
+        <div class="row">
+            <div class="col-sm-4 mb-3" style="position: relative;">
+                <img src="/src/p1.jpg" alt="" class="img-fluid">
+                <div class="write-up">
+                    <p class="new-collectons">new collectons</p>
+                    <h2>seasonings</h2>
+                    <p class="normalText">
+                        Lorem ipsum dolor, sit amet  
+                        elit. Reiciendis dignissimos voluptatibus aliquam.
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3" style="position: relative;">
+                <img src="/src/p2.jpg" alt="" class="img-fluid">
+                <div class="write-up">
+                    <h2>BIG SALES</h2>
+                    <!-- <div class="square">
+                        <div class="innerdiv">
+                            <span>me</span>
+                        </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+            <div class="col-sm-4 d-flex flex-column justify-content-center align-items-center gap-4 mb-3">
+                <div style="position: relative;">
+                    <img src="/src/p3.jpg" alt="" class="img-fluid d-block">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color:orange; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                        <h3>cooking oil</h3>
+                        <p>Up to 50% Off</p>
+                    </div>
+                </div>  
+                <div style="position: relative;">
+                    <img src="/src/p4.jpg" alt="" class="img-fluid d-block">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: orange; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                        <h3>vegetables</h3>
+                        <p>Save 30% Today</p>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+
+    <div class="swiper-container mt-5">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/src/banner1.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="/src/banner2.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="/src/banner4.jpg" alt="">
+            </div>
+           
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <div class="container mb-5 display-secialOffer" >
+
+    </div>
+
+    <%- include('partials/footer.ejs') %>
+    <!-- ... (include all necessary script tags) ... -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+
+var swiper = new Swiper('.swiper-container', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    autoplay: {
+    delay: 7000,
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+});
+    
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const specialOfferContainer = document.querySelector('.display-secialOffer');
+
+    // Function to load discounted products into the special offer section
+    async function loadDiscountedProducts() {
+        try {
+            const response = await fetch('/admin/display-discountedProducts');
+            const data = await response.json();
+
+            let productCards = `<div class="product-grid">`;
+                console.log(data);
+
+            data.products.forEach(product => {
+                const price = parseFloat(product.price);  // Ensure price is a number
+                const discountedPrice = price - (price * (product.discount / 100));
+
+                productCards += `
+                    <div class="product-card border" >
+                        <div class="product-image"><img src="${product.image_url}" alt="${product.name}" class="product-image"></div>
+                        <h5 class="product-name">${product.name}</h5>
+                        <p class="discounted-price-percent"> -${product.discount}%</p>
+                        <p class="discounted-price"><strong>₦${discountedPrice.toFixed(2)}</strong></p>
+                        <p class="original-price"><del>₦${price.toFixed(2)}</del></p>
+                        <a href="/products/${product.product_id}" class="btn btn-primary">View Product</a>
+                    </div>
+                `;
+            });
+
+            productCards += '</div>';  // Close product grid
+
+            specialOfferContainer.innerHTML = productCards;
+        } catch (error) {
+            console.error('Error fetching discounted products:', error);
+            specialOfferContainer.innerHTML = '<p>Error loading discounted products. Please try again.</p>';
+        }
+    }
+
+    // Automatically load discounted products when the index page loads
+    loadDiscountedProducts();
+});
+
+
+AOS.init(
+    {
+        once: false,
+        duration: 1000,
+        easing: 'ease-in-out',
+        mirror: true,
+    }
+ );
+
+
+  
+
+
+    
+</script>
+</body>
+</html>

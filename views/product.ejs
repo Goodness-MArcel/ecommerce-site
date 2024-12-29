@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ECp4ozDqfG9TrM9h3LclJvs6P5oEgO32uLsBMVkHqLG1xsmXKkdN6QlLBvMVJDQj" crossorigin="anonymous">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Document</title>
+    
+      
+    
+    
+</head>
+
+<style>
+    .pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.pagination a.active {
+    background-color: orange;
+    color: white;
+    border-color: orange;
+}
+.container1 form button {
+    align-items: center;
+    background-color: #2aa23a;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: 10px;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.container1 form button,
+.container1 form button:focus {
+    /* border-color: rgba(0, 0, 0, 0.15); */
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.container1 form button:hover {
+ transform: translateY(-1px);
+}
+
+.container1 form button:active {
+ background-color: #F0F0F1;
+ border-color: rgba(0, 0, 0, 0.15);
+ box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+ color: rgba(0, 0, 0, 0.65);
+ transform: translateY(0);
+} 
+body {
+    font-family: 'Poppins', sans-serif;
+}
+td{
+    text-align: start;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+th{
+    font-size: 13px;
+ }
+table{
+    width: 100%;
+}
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.pagination a.active {
+    background-color: orange;
+    color: white;
+    border-color: orange;
+}
+.container1 {
+    box-shadow: rgba(188, 198, 208, 0.2) 0px 8px 24px;
+    padding-block: 1.3rem;
+    height: auto;
+    border-radius: 5px;
+}
+
+input[type="number"]{
+   width: 50px;
+}
+form h4 {
+   margin-top: 0;
+}
+.container1{
+   display: flex;
+} 
+.container1 >*{
+   width: 50%;
+}
+.first-section{
+   width: 50%;
+}
+.second-section{
+    position: relative;
+  
+}
+.second-section .option {
+    height: 50%;
+    max-height: 30%;
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    width: 100%;
+    /* border: thin solid green; */
+    border-radius: 8px;
+    position: absolute;
+    margin-top: 15px;
+    a{
+        display: block;
+        text-decoration: none;
+        color: black;
+        padding: 10px 13px;
+        border-radius: 5px;
+        width: 100px;
+        text-align: center;
+        text-transform: capitalize;
+    }
+    &:hover {
+        transform: translateY(-1px);
+    }
+    a[href="#"] {
+        background-color: #2aa23a;
+        cursor: pointer;
+        &:hover {
+            background-color: darkgreen;
+            color: white;
+        }
+    }
+    a[href="withdraw"] {
+        background-color: red;
+        &:hover{
+            background-color: darkred;
+            color: white;
+        }
+    }
+    a[href="deposit"] {
+        background-color: #2aa23a;
+    }
+}
+.search-box {
+            margin-bottom: 20px;
+        }
+        #searchInput {
+            padding: 5px;
+            width: 200px;
+        }
+        .all-products {
+            margin-top: 30px;
+        }
+        
+
+</style>
+<body>
+   
+<div class="container1">
+    <div class="first-section">
+        <form action="/admin/set-discount" method="POST" id="discount-form">
+            <h4>Select Products to Apply Discount</h4>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Set Discount (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(product => { %>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="selectedProducts[]" value="<%= product.product_id %>">
+                        </td>
+                        <td><%= product.name %></td>
+                        <td>₦<%= product.price %></td>
+                        <td>
+                            <input type="number" name="discount_<%= product.product_id %>"  min="0" max="100">
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        
+            <button type="submit">Apply Discount</button>
+        </form>
+        
+        <!-- Pagination Controls -->
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+                <a href="/admin/products?page=<%= currentPage - 1 %>">&laquo; Previous</a>
+            <% } %>
+        
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/admin/products?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>">
+                    <%= i %>
+                </a>
+            <% } %>
+        
+            <% if (currentPage < totalPages) { %>
+                <a href="/admin/products?page=<%= currentPage + 1 %>">Next &raquo;</a>
+            <% } %>
+        </div>
+    </div>
+    <div class="second-section">
+       <div class="discountedprduct"></div>
+       <div class="option">
+        <a href="#" id="sell-button">Sell</a>
+        <a href="withdraw">withdraw</a>
+       </div>
+    </div>
+    
+</div>
+<div class="all-products">
+    <h2>All Products</h2>
+    
+    <!-- Search and Filter Section -->
+    <div class="search-controls border">
+        <div class="search-box" >
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search by name or category"
+                class="p-2 border rounded " style="width:500px;">
+            <select id="categoryFilter" class="p-2 border rounded ml-2">
+                <option value="">All Categories</option>
+               
+            </select>
+            <select id="priceSort" class="p-2 border rounded ml-2">
+                <option value="">Sort by Price</option>
+                <option value="asc">Price: Low to High</option>
+                <option value="desc">Price: High to Low</option>
+            </select>
+            <button 
+                onclick="applyFilters()"
+                class="px-4 py-2 bg-blue-500 text-white rounded ml-2">
+                Apply Filters
+            </button>
+        </div>
+    </div>
+
+    <!-- Products Table -->
+    <div id="alertPlaceholder" class="mt-3"></div>
+    <table class="w-full mt-4">
+        <thead>
+            <tr>
+                <th class="p-2 border">Product Name</th>
+                <th class="p-2 border">Category</th>
+                <th class="p-2 border">Price</th>
+                <th class="p-2 border">Stock</th>
+                <th class="p-2 border">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="productTableBody">
+            
+        </tbody> 
+    </table>
+    <div id="paginationControls" class="mt-4 flex justify-center gap-2"></div>
+    
+
+<!-- Add this before closing body tag -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editProductForm">
+            <input type="hidden" id="editProductId">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Product Name</label>
+              <input type="text" class="form-control" id="editName" required>
+            </div>
+            <div class="mb-3">
+              <label for="editCategory" class="form-label">Category</label>
+              <input type="text" class="form-control" id="editCategory" required>
+            </div>
+            <div class="mb-3">
+              <label for="editPrice" class="form-label">Price</label>
+              <input type="number" class="form-control" id="editPrice" required>
+            </div>
+            <div class="mb-3">
+              <label for="editStock" class="form-label">Stock</label>
+              <input type="number" class="form-control" id="editStock" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+ 
+
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-mrcA2VBOVsHlB6GJ1zK8UmM/X7/2Vwvynh6qyJ3bzZYW1Nr8jMEfrkq5jAXkEdvK" crossorigin="anonymous"></script>
+  
+</body>
+</html>

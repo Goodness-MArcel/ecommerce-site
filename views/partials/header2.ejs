@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/cb704069bc.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+
+    <% if (page === 'index') { %>
+        <link rel="stylesheet" href="/index.css">
+    <% } %>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/header.css">
+    
+</head>
+<body>
+
+
+    <div class="container-fluid text-center pt-5">
+        <h2 class="h1 SoroNara">soronara</h2>
+        <small class="text-uppercase noto">the best super market</small>
+        <ul class="d-flex justify-content-center gap-2 text-capitalize flex-wrap mt-3">
+            <!-- <li class="nav-item">
+                <a href="" class="nav-link text-decoration-none align-items-center d-flex icon-link">
+                    <ion-icon name="heart"></ion-icon> Wishlist
+                </a>
+            </li> -->
+            <li class="nav-item">
+                <a href="<%= isLoggedIn ? '/wishlist' : '#' %>" 
+                   class="nav-link text-decoration-none align-items-center d-flex icon-link"
+                   <%= !isLoggedIn ? 'data-bs-toggle="modal" data-bs-target="#loginModal"' : '' %>>
+                    <ion-icon name="heart"></ion-icon> Wishlist
+                </a>
+            </li>
+            <% if (!isLoggedIn) { %>
+            <li class="nav-item">
+                  <a href="#" class="nav-link text-decoration-none align-items-center d-flex icon-link" data-bs-toggle="modal" data-bs-target="#loginModal">
+                      <ion-icon name="person"></ion-icon> Login
+                  </a>
+
+                    <!-- Login Modal -->
+                    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/login" method="post" class="form">
+                                        <div class="mb-3">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope text-success"></i></span>
+                                                <input type="email" class="form-control" id="loginEmail" placeholder="Email" required  name="email">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock text-success"></i></span>
+                                                <input type="password" class="form-control" id="loginPassword" placeholder="Password" required name="password">
+                                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div id="loginError" class="alert alert-danger d-none" role="alert"></div>
+                                        <button type="submit" class="btn btn-warning w-100">Login</button>
+                                    </form>
+                                    
+                    
+                                    <script>
+                                        document.getElementById('togglePassword').addEventListener('click', function () {
+                                            const password = document.getElementById('loginPassword');
+                                            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                                            password.setAttribute('type', type);
+                                            this.querySelector('i').classList.toggle('fa-eye');
+                                            this.querySelector('i').classList.toggle('fa-eye-slash');
+                                        });
+
+                                        document.querySelector('form').addEventListener('submit', async function(e) {
+                                            e.preventDefault();
+
+                                            const formData = new FormData(this);
+                                            try {
+                                                const response = await fetch('/login', {
+                                                    method: 'POST',
+                                                    body: new URLSearchParams(formData),  // Ensures the form is submitted as URL-encoded
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'  // Sets correct content-type
+                                                    }
+                                                });
+
+                                                const data = await response.json();
+                                                if (response.ok) {
+                                                    window.location.href = '/';  // Redirect on successful login
+                                                } else {
+                                                    const errorDiv = document.getElementById('loginError');
+                                                    errorDiv.textContent = data.message || 'Login failed. Please try again.';
+                                                    errorDiv.classList.remove('d-none');
+                                                }
+                                            } catch (error) {
+                                                console.error('Login error:', error);
+                                                const errorDiv = document.getElementById('loginError');
+                                                errorDiv.textContent = 'An error occurred. Please try again later.';
+                                                errorDiv.classList.remove('d-none');
+                                            }
+                                        });
+                                    </script>
+                                    
+                                    <div class="mt-3 text-center">
+                                        <a href="#" class="text-success"  data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+               </div>   
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-decoration-none align-items-center d-flex icon-link" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <ion-icon name="arrow-forward-circle"></ion-icon> Register
+                </a>
+
+                <!-- Register Modal -->
+                <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <!-- Add your registration form here -->
+                            <form id="registerForm" novalidate method="post">
+                                <div id="errorAlert" class="alert alert-danger d-none" role="alert"></div>
+                                <div class="mb-3 text-start text-orange">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user" style="color: green;"></i></span>
+                                        <input type="text" class="form-control" id="registerFirstName" placeholder="First Name" required minlength="3" maxlength="20" name="fname">
+                                    </div>
+                                    <div class="invalid-feedback">Please enter your firstname (3-20 characters).</div>
+                                </div>
+                            
+                                <div class="mb-3 text-start text-orange">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user" style="color: green;"></i></span>
+                                        <input type="text" class="form-control" id="registerLastName" placeholder="Last Name" required minlength="3" maxlength="20" name="lname">
+                                    </div>
+                                    <div class="invalid-feedback">Please enter your lastname (3-20 characters).</div>
+                                </div>
+                            
+                                <div class="mb-3 text-start text-orange">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope" style="color: green;"></i></span>
+                                        <input type="email" class="form-control" id="registerEmail" placeholder="Email Address" required name="email">
+                                    </div>
+                                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                                </div>
+                            
+                                <div class="mb-3 text-start text-orange">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock" style="color: green;"></i></span>
+                                        <input type="password" class="form-control" id="registerPassword" placeholder="Password" required minlength="8" name="password">
+                                        <span class="input-group-text" style="cursor: pointer;">
+                                            <i class="fas fa-eye" id="togglePassword"></i>
+                                        </span>
+                                    </div>
+                                    <div class="invalid-feedback">Password must be at least 8 characters long.</div>
+                                </div>
+                            
+                                <button type="submit" class="btn btn-warning w-100">Register</button>
+                            </form>
+                                
+                                <script>
+                                       document.getElementById('registerForm').addEventListener('submit', async function (e) {
+                                        e.preventDefault(); // Prevent default form submission
+                                    
+                                            const formData = new FormData(this); // Get form data
+                                            const errorAlert = document.getElementById('errorAlert'); // Error alert element
+
+                                            try {
+                                                console.log('Sending form data...'); // Debugging: check if the form is being sent
+
+                                                const response = await fetch('/register', {
+                                                    method: 'POST',
+                                                    body: new URLSearchParams(formData),  // Ensures the form is submitted as URL-encoded
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'  // Sets correct content-type
+                                                    }
+                                                });
+                                                
+                                                const result = await response.json(); // Parse the JSON response
+                                                
+                                                console.log('Server response:', result); // Debugging: log the server response
+
+                                                // Clear any previous error message
+                                                errorAlert.classList.add('d-none');
+                                                
+                                                if (response.ok) {
+                                                    // Registration successful
+                                                    alert(result.message); // Optional: alert the user of success
+                                                    window.location.href = '/'; // Redirect to home or another page
+                                                } else {
+                                                    // Handle errors (e.g., user already exists)
+                                                    errorAlert.textContent = result.error;
+                                                    errorAlert.classList.remove('d-none');
+                                                    console.error('Error:', result.error); // Debugging: log the error
+                                                }
+                                                
+                                            } catch (error) {
+                                                console.error('Registration error:', error); // Debugging: log any fetch errors
+                                                errorAlert.textContent = 'An error occurred. Please try again later.';
+                                                errorAlert.classList.remove('d-none');
+                                            }
+                                        });
+
+                                        // Toggle password visibility
+                                        const togglePassword = document.getElementById('togglePassword');
+                                        const passwordField = document.getElementById('registerPassword');
+                                        togglePassword.addEventListener('click', function () {
+                                            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                                            passwordField.setAttribute('type', type);
+                                            this.classList.toggle('fa-eye-slash');
+                                        });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+            </li>
+         
+            <% } else { %>
+                        <!-- Logout Link -->
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link text-decoration-none align-items-center d-flex icon-link">
+                            <ion-icon name="log-out-outline"></ion-icon> Logout
+                        </a>
+                    </li>
+                 
+            <% } %>
+
+           
+            <li class="nav-item">
+                <a href="" class="nav-link text-decoration-none align-items-center d-flex icon-link">
+                    <ion-icon name="receipt"></ion-icon> Order History
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/shipping" class="nav-link text-decoration-none align-items-center d-flex icon-link">
+                    <ion-icon name="car"></ion-icon> Shipping
+                </a>
+            </li>  
+
+            <div class="message-user" style="position: absolute;left: 0; top: 0;">
+                <% if (sessionUser) { %>
+                    <p><span class="hello">Hello</span>, <span class="name"><%= sessionUser.firstName %></span>!</p>
+                <% } else { %>
+                    <p> <spn class="hello">Welcome</spn>, <span class="name">Guest</span>!</p>
+                <% } %>
+
+                <div class="cart position-fixed top-0 end-0 p-3 d-block d-lg-none"> <!-- Removed d-none d-lg-block -->
+                    <span class="cart-container">
+                        <a href="/cart">
+                            <i class="fa-solid fa-cart-shopping fs-4 text-success"></i>
+                            <% if (locals.cart && cart.items && cart.items.length > 0) { %>
+                                <span class="cart-count"><%= cart.items.reduce((sum, item) => sum + item.quantity, 0) %></span>
+                            <% } %>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </ul>
+        <div class="social-icon d-flex justify-content-center gap-2">
+
+            <span 
+            class="d-flex justify-content-center ali align-items-center" ><a href=""><i class="fa-brands fa-facebook-f"></i></a></span>
+            <span   
+            class="d-flex justify-content-center ali align-items-center" >
+            <a href=""><i class="fa-brands fa-twitter"></i></a></span>
+            <span 
+            class="d-flex justify-content-center ali align-items-center" ><a href=""><i class="fa-brands fa-pinterest-p"></i></a></span>
+            <span  
+            class="d-flex justify-content-center ali align-items-center" ><a href=""><i class="fa-solid fa-basketball"></i></a></span>
+        </div>
+        <% if (sessionUser && sessionUser.role === 1) { %>
+            <a href="/admin-panel" id="dashboard-btn">Dashboard</a>
+        <% } %>
+    </div>
+    <nav class=" container pt-3  d-lg-flex justify-content-between align-items-center">
+        <button class="menu-toggler"><i class="fa-solid fa-bars"></i></button>
+        <ul class="second-ul">
+            <li class="nav-item">
+                <a href="/" class=" text-capitalize text-decoration-none nav-item-big1 d-flex" style="display: block;">
+                    <div class="green-border1"></div>
+                    <div class="orange-bg1"></div>
+                    home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class=" text-capitalize text-decoration-none nav-item-big d-flex" style="display: block;" data-target="content1">
+                    <div class="green-border"></div>
+                    <div class="orange-bg"></div>
+                    kitchen
+                    <span> <i class="fa-solid fa-caret-down"></i></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class=" text-capitalize text-decoration-none nav-item-big d-flex" style="display: block;" data-target="content2">
+                    <div class="green-border"></div>
+                    <div class="orange-bg"></div>
+                    personal care
+                    <span> <i class="fa-solid fa-caret-down"></i></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="text-capitalize text-decoration-none nav-item-big d-flex" style="display: block;" data-target="content3">
+                    <div class="green-border"></div>
+                    <div class="orange-bg"></div>
+                    house hold
+                    <span> <i class="fa-solid fa-caret-down"></i></span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="text-capitalize text-decoration-none nav-item-big d-flex" style="display: block;">
+                    <div class="green-border"></div>
+                    <div class="orange-bg"></div>
+                    contact us 
+                </a>
+            </li>
+        </ul>
+        <div class="cart d-none d-lg-block">
+            <span class="cart-container">
+                <a href="/cart">
+                    <i class="fa-solid fa-cart-shopping fs-4 text-success"></i>
+                    <% if (locals.cart && cart.items && cart.items.length > 0) { %>
+                        <span class="cart-count"><%= cart.items.reduce((sum, item) => sum + item.quantity, 0) %></span>
+                    <% } %>
+                </a>
+            </span>
+        </div>
+    </nav>
+
+
+   
+  
+   
+    <main>
+
+        
+</body>
+</html>
+
+
+   

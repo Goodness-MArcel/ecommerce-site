@@ -1,0 +1,47 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+td{
+    text-align: start;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+th{
+    font-size: 13px;
+ }
+table{
+    width: 100%;
+}
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.pagination a.active {
+    background-color: orange;
+    color: white;
+    border-color: orange;
+}
+.container {
+    box-shadow: rgba(188, 198, 208, 0.2) 0px 8px 24px;
+    padding-block: 2rem;
+}
+
+input[type="number"]{
+   width: 50px;
+}
+form h4 {
+   margin-top: 0;
+}
+.container{
+   display: flex;
+   /* justify-content: ; */
+} 
+.container >*{
+   width: 50%;
+}
+.first-section{
+   width: 50%;
+}

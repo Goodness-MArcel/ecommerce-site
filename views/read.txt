@@ -1,0 +1,7 @@
+frontend files are 
+index.ejs
+cart.ejs
+checkout.ejs
+allproducts.ejs
+product-details.ejs
+shipping.ejs

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/cb704069bc.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/header.css">
+    
+</head>
+<style>
+    body{
+        font-size: 13px;
+    }
+    img{
+        width: 100px;
+        background: transparent;
+    }
+
+.container{
+   
+    padding-block: 1.6rem;
+    h2{
+        font-family: 'Montserrat', sans-serif;
+        margin: 40px 0 10px 0;
+        color: green;
+ 
+    }
+    p{
+        margin: 0;
+    }
+}
+.seared{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding-block: 2rem;
+    padding-inline: 1.3rem;
+    width: 70%;
+    position: relative;
+    border-radius: 5px;
+}
+.basic-slider{
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+    padding-block: 2.5rem;
+    /* padding-inline: 2rem; */
+}
+.btn-primary{
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    right: 30%;
+    background-color:white !important;
+    outline: none !important;
+    color: black !important;
+    font-family: 'Montserrat', sans-serif !important;
+    border: thin solid orange !important;
+    &:hover{
+        background-color: orange !important;
+        color: white !important;
+
+    }
+}
+.related-product-card{
+    /* border: thin solid red; */
+   position: relative;
+   text-align: center;
+   height:100%;
+   width: 80%;
+   padding-block: 1.3rem;
+   border-radius: 8px;
+}
+.discount{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: orange;
+    color: green !important;
+    padding: 5px 5px;
+}
+.related-product-card h3{
+    text-align: center;
+    font-size: 14px;
+    color: black !important;
+    margin: 0;
+}
+#my_form{
+    /* display: none; */
+    visibility: hidden;
+}
+.related-product-card:hover #my_form {
+    display: block;
+    visibility: visible;
+   
+}
+.related-product-card:hover{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+@media screen and (max-width:720px){
+    .related-product-card{
+        margin: auto;
+    }
+    .seared {
+        width: 100%;
+    }
+    .btn-primary{
+        right: 0;
+    }
+}
+
+</style>
+<body>
+   <div class="container">
+        <div class="seared">
+            <h1><%= product.name %></h1>
+
+            <% if (product.discount > 0) { %>
+                <% const discountedPrice = (product.price - (product.price * product.discount / 100)).toFixed(2); %>
+                <p> Price: <strong>₦<%= discountedPrice %></strong></p>
+                <p class="original-price"><del>Original Price: ₦<%= product.price %></del></p>
+                <p class="discount">-<%= product.discount %>%</p>
+            <% } else { %>
+                <p>Price: ₦<%= product.price %></p>
+            <% } %>
+            
+            <img src="/<%= product.image_url %>" alt="<%= product.name %>" />
+            
+            <a href="/products/<%=product.product_id%>" class="btn btn-primary">View Product</a>
+        </div>
+
+        <!-- Related Products Section -->
+        <h2>produts you may like </h2>
+        <div class="swiper basic-slider border" style="margin: auto;margin-bottom: 20px;">
+            <div class="swiper-wrapper " >
+                <% relatedProducts.forEach(rProduct => { %>
+                    <div class="swiper-slide" >
+                        <div class="related-product-card">
+                            <a href="/product/<%= rProduct.product_id %>">
+                                <h3><%= rProduct.name %></h3>
+                                <img src="/<%= rProduct.image_url %>" alt="<%= rProduct.name %>" />
+                            </a>
+                            
+                            <% if (rProduct.discount > 0) { %>
+                                <p> <strong>₦<%= (rProduct.price - (rProduct.price * rProduct.discount / 100)).toFixed(2) %></strong> </p>
+                                <p>Price: <del> ₦<%= rProduct.price %></del></p>
+                                <p class="discount">-<%= rProduct.discount %>%</p>
+                            <% }else{ %>
+                                <p>Price: ₦<%= rProduct.price %></p>
+                            <% } %>
+                            
+                            
+                            <form id="my_form" class="mt-3">
+                            
+    
+                                <button class="btn btn-warning"
+                                    onclick="addToCart({
+                                    product_id: '<%= product.product_id %>',
+                                    price: '<%= product.price %>',
+                                    name: '<%= product.name %>',
+                                    quantity: 1, 
+                                    image: '<%= product.image_url %>',
+                                })">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+            <!-- Navigation buttons -->
+            <div class="swiper-button-next" style="color: orange;"></div>
+            <div class="swiper-button-prev" style="color: orange;"></div>
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+   </div>
+
+    <%- include('partials/footer.ejs') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+
+async function addToCart(productData) {
+            try {
+                console.log('Sending data:', productData); // Debug log
+                document.getElementById('my_form').addEventListener('submit', function (e){
+                    e.preventDefault();
+                })
+                
+                const response = await fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                });
+        
+                const result = await response.json();
+                console.log('Server response:', result);
+        
+                if (result.success) {
+                    alert(result.message);
+                } else {
+                    alert('Error adding to cart: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error adding to cart');
+            }
+        }
+           const basicSlider = new Swiper('.basic-slider', {
+            // Optional parameters
+            loop: true,
+            slidesPerView: 4,
+            spaceBetween: 3,
+            autoplay: {
+               delay: 3000,
+            },
+            
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            
+            // Pagination
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 3
+                }
+            },
+            
+        });
+    </script>
+</body>
+</html>

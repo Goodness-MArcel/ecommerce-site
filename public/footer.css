@@ -1,0 +1,25 @@
+ footer {
+    padding-block: 4rem;
+    font-size: 14px;
+    color: #b0aaa9;
+}
+a,p,span,small{
+    color: #b0aaa9 !important;
+    text-decoration: none !important;
+    text-transform: capitalize;
+    
+}
+a{
+    text-align: start !important;
+}
+h3,.supermarket,h1{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+li a{
+    margin: 0;
+}
+/* p{
+    color: #b0aaa9;
+} */

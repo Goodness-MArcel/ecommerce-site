@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <!-- Montserrat Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body{
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+        }
+        .checkout-progress {
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        .step {
+            position: relative;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .step.active {
+            background: green;
+            color: white;
+        }
+        .step.completed {
+            background: #198754;
+            color: white;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .payment-card {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .payment-card.selected {
+            border-color: orange;
+            background-color: #f8f9fa;
+        }
+        .cart-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        input[type="radio"]:checked{
+            background-color: #198754;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Checkout Progress -->
+        <div class="checkout-progress">
+            <div class="row text-center">
+                <div class="col-4">
+                    <div class="step active">1</div>
+                    <small>Information</small>
+                </div>
+                <div class="col-4">
+                    <div class="step">2</div>
+                    <small>Payment</small>
+                </div>
+                <div class="col-4">
+                    <div class="step">3</div>
+                    <small>Confirmation</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column - Form -->
+            <div class="col-lg-8">
+                <form id="checkoutForm" class="needs-validation" novalidate>
+                    <!-- Shipping Information -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Shipping Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your first name
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your last name
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid email address
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your shipping address
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your city
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">State</label>
+                                    <select class="form-select" required>
+                                        <option value="">Choose...</option>
+                                        <option value="Imo" class="option_text_state">imo</option>
+                                        <option value="lagos" class="option_text_state">lagos</option>
+                                        <option value="Abia" class="option_text_state">Abia</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select your state
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-control" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your ZIP code
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Method -->
+                    <div class="shipping-options mb-4">
+                        <h5>Shipping Method</h5>
+                        <% shippingOptions.forEach(option => { %>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input shipping-option" 
+                                       type="radio" 
+                                       name="shipping" 
+                                       id="<%= option.id %>" 
+                                       value="<%= option.cost %>"
+                                       required
+                                       <%= option.id === 'standard' ? 'checked' : '' %>>
+                                <label class="form-check-label" for="<%= option.id %>">
+                                    <span class="d-flex justify-content-between">
+                                        <span><%= option.name %></span>
+                                        <strong>₦<%= option.cost.toFixed(2) %></strong>
+                                    </span>
+                                </label>
+                            </div>
+                        <% }); %>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0">Payment Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="payment-card selected mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment" id="credit" checked required >
+                                    <label class="form-check-label" for="credit">
+                                        Credit Card
+                                    </label>
+                                </div>
+                                <div class="row g-3 mt-2">
+                                    <div class="col-12">
+                                        <label class="form-label">Card Number</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" required pattern="\d*" maxlength="16">
+                                            <span class="input-group-text">
+                                                <i class="bi bi-credit-card"></i>
+                                            </span>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please enter a valid card number
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Expiration</label>
+                                        <input type="text" class="form-control" placeholder="MM/YY" required pattern="\d\d/\d\d">
+                                        <div class="invalid-feedback">
+                                            Please enter a valid expiration date
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">CVV</label>
+                                        <input type="text" class="form-control" required pattern="\d{3,4}" maxlength="4">
+                                        <div class="invalid-feedback">
+                                            Please enter a valid CVV
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="payment-card mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment" id="paypal" required>
+                                    <label class="form-check-label" for="paypal">
+                                        PayPal
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Column - Order Summary -->
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Cart Items -->
+                        <div class="cart-items mb-4">
+                            <% if (Array.isArray(cartItems) && cartItems.length > 0) { %>
+                                <% cartItems.forEach(item => { %>
+                                    <div class="cart-item">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="mb-0"><%= item.name %></h6>
+                                                <small class="text-muted">Quantity: <%= item.quantity %></small>
+                                            </div>
+                                            <span>₦<%= (item.price * item.quantity).toFixed(2) %></span>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <p>Your cart is empty.</p>
+                            <% } %>
+                        </div>
+                    
+                        <!-- Order Totals -->
+                        <% if (Array.isArray(cartItems) && cartItems.length > 0) { %>
+                            <div class="border-top pt-3" id="orderSummary">
+                                <% 
+                                    const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+                                    const initialShipping = 4.99; // Default to standard shipping
+                                    const tax = subtotal * 0.08;
+                                    const initialTotal = subtotal + initialShipping + tax;
+                                %>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal</span>
+                                    <span>₦<%= subtotal.toFixed(2) %></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Shipping</span>
+                                    <span id="shippingCost">₦<%= initialShipping.toFixed(2) %></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Tax</span>
+                                    <span>₦<%= tax.toFixed(2) %></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2 fw-bold">
+                                    <span>Total</span>
+                                    <span id="orderTotal">₦<%= initialTotal.toFixed(2) %></span>
+                                </div>
+                        
+                                <!-- Hidden inputs for calculations -->
+                                <input type="hidden" id="subtotalValue" value="<%= subtotal %>">
+                                <input type="hidden" id="taxRate" value="0.08">
+                                <input type="hidden" id="taxValue" value="<%= tax %>">
+                            </div>
+                        <% } %>
+                    </div>
+                    
+                <!-- Place Order Button -->
+                <button type="submit" form="checkoutForm" class="btn  w-100 btn-lg" style="background-color: orange;">
+                    Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Validation Script -->
+    <script>
+        // Form validation
+     document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('checkoutForm');
+    
+    if (!form) {
+        console.error('Checkout form not found');
+        return;
+    }
+
+    // Credit card formatting
+    const cardInput = form.querySelector('input[pattern="\\d*"]');
+    if (cardInput) {
+        cardInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 16) value = value.slice(0, 16);
+            
+            // Add spaces every 4 digits
+            const parts = value.match(/[\d]{1,4}/g) || [];
+            e.target.value = parts.join(' ');
+            
+            // Validate card number using Luhn algorithm
+            const isValid = luhnCheck(value);
+            this.setCustomValidity(isValid ? '' : 'Invalid card number');
+        });
+    }
+
+    // Expiration date formatting
+    const expiryInput = form.querySelector('input[placeholder="MM/YY"]');
+    if (expiryInput) {
+        expiryInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            
+            if (value.length > 2) {
+                const month = parseInt(value.slice(0, 2));
+                const year = parseInt(value.slice(2, 4));
+                
+                // Validate month
+                if (month < 1 || month > 12) {
+                    this.setCustomValidity('Invalid month');
+                } else {
+                    // Validate expiration date
+                    const now = new Date();
+                    const expiry = new Date(2000 + year, month - 1);
+                    this.setCustomValidity(expiry > now ? '' : 'Card has expired');
+                }
+                
+                value = value.slice(0, 2) + '/' + value.slice(2);
+            }
+            e.target.value = value;
+        });
+    }
+
+    // CVV formatting
+    const cvvInput = form.querySelector('input[pattern="\\d{3,4}"]');
+    if (cvvInput) {
+        cvvInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 4) value = value.slice(0, 4);
+            e.target.value = value;
+            
+            // Validate CVV length
+            const isAmex = cardInput && cardInput.value.startsWith('34') || cardInput.value.startsWith('37');
+            const validLength = isAmex ? 4 : 3;
+            this.setCustomValidity(value.length === validLength ? '' : `CVV must be ${validLength} digits`);
+        });
+    }
+
+    // Payment method selection
+    const paymentCards = document.querySelectorAll('.payment-card');
+    paymentCards.forEach(card => {
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio) {
+            radio.addEventListener('change', function() {
+                paymentCards.forEach(c => c.classList.remove('selected'));
+                if (this.checked) {
+                    card.classList.add('selected');
+                }
+            });
+        }
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        if (!form.checkValidity()) {
+            // Show validation messages
+            form.classList.add('was-validated');
+            return;
+        }
+        
+        // Show loading state
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (!submitButton) return;
+        
+        submitButton.disabled = true;
+        const originalText = submitButton.innerHTML;
+        submitButton.innerHTML = `
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Processing...
+        `;
+        
+        // Simulate API call
+        setTimeout(() => {
+            try {
+                // Success scenario
+                alert('Order placed successfully!');
+                form.reset();
+                form.classList.remove('was-validated');
+            } catch (error) {
+                console.error('Payment processing error:', error);
+                alert('An error occurred while processing your payment. Please try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+            }
+        }, 2000);
+    });
+});
+
+// Luhn algorithm for credit card validation
+function luhnCheck(cardNumber) {
+    if (!cardNumber) return false;
+    
+    let sum = 0;
+    let isEven = false;
+    
+    // Loop through values starting from the rightmost digit
+    for (let i = cardNumber.length - 1; i >= 0; i--) {
+        let digit = parseInt(cardNumber.charAt(i));
+
+        if (isEven) {
+            digit *= 2;
+            if (digit > 9) {
+                digit -= 9;
+            }
+        }
+
+        sum += digit;
+        isEven = !isEven;
+    }
+
+    return sum % 10 === 0;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const shippingOptions = document.querySelectorAll('.shipping-option');
+    const shippingCostDisplay = document.getElementById('shippingCost');
+    const orderTotalDisplay = document.getElementById('orderTotal');
+    const subtotalValue = parseFloat(document.getElementById('subtotalValue').value);
+    const taxValue = parseFloat(document.getElementById('taxValue').value);
+
+    function updateTotal(shippingCost) {
+        const total = subtotalValue + parseFloat(shippingCost) + taxValue;
+        
+        // Update displays
+        shippingCostDisplay.textContent = `₦${parseFloat(shippingCost).toFixed(2)}`;
+        orderTotalDisplay.textContent = `₦${total.toFixed(2)}`;
+    }
+
+    // Add change event listeners to shipping options
+    shippingOptions.forEach(option => {
+        option.addEventListener('change', function() {
+            if (this.checked) {
+                updateTotal(this.value);
+            }
+        });
+    });
+
+    // Initialize with default shipping option
+    const defaultShipping = document.querySelector('.shipping-option:checked');
+    if (defaultShipping) {
+        updateTotal(defaultShipping.value);
+    }
+});
+    </script>
+</body>
+</html>
